@@ -12,9 +12,7 @@ extension Array where Element: Comparable, Element: Hashable {
     func removeAdjacentDuplicates() -> [Element] {
         var previousElement: Element? = nil
         return reduce(into: []) { total, element in
-            defer {
-                previousElement = element
-            }
+            defer { previousElement = element }
             guard previousElement != element else { return }
             total.append(element)
         }
