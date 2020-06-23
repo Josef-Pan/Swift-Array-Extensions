@@ -8,16 +8,14 @@ extension Array where Element: Comparable, Element: Hashable {
         //        return reduced.1
         return self.removeAllDuplicates().count
     }
-     /// Remove only adjacent duplicates from Array, keep the first occurence
+    /// Remove only adjacent duplicates from Array, keeping the first occurence
     func removeAdjacentDuplicates() -> [Element] {
         var previousElement: Element? = nil
         return reduce(into: []) { total, element in
             defer {
                 previousElement = element
             }
-            guard previousElement != element else {
-                return
-            }
+            guard previousElement != element else { return }
             total.append(element)
         }
     }
@@ -27,14 +25,14 @@ extension Array where Element: Comparable, Element: Hashable {
             total.contains(element) ? (): total.append(element)
         }
     }
-    /// Remove all elements that are duplicating from Array, no keeping
+    /// Remove all elements that are duplicating from Array, not keeping of any occurrences of repeating elements
     func removeAllDuplicatingElements()-> [Element] {
         let counts = reduce(into: [:]){ total, element in
             total[element, default:0 ] += 1
         } // let counts = reduce(into: [:]) { $0[$1, default: 0] += 1 } // Not readable
         return filter{ element in
             guard let count = counts[element] else { return false}
-            return count>1 ? false : true               // Element with occurences more than 1 are duplicating
+            return count>1 ? false : true    // Element with occurrences more than 1 are duplicating
         }
     }
     /// Test if Array has duplicates
@@ -71,7 +69,7 @@ extension Array where Element: Comparable, Element: Hashable {
         }
         return true
     }
-    /// Get all combinations from Array
+    /// Get all combinations from Array, apply filter { $0.count ==n } to get combos of n elements
     func getAllCombinations() ->[[Element]] {
         guard count > 0 else { return [[]] }
         let tail = Array(self[1..<endIndex])    // tail contains the elements excluding the first element
@@ -80,7 +78,7 @@ extension Array where Element: Comparable, Element: Hashable {
         let withHead = withoutHead.map { $0 + [head] }  // merging the head with the tail's powerset
         return withHead + withoutHead   // returning the tail's powerset and the just computed withHead array
     }
-     /// Get all permuations of an array
+    /// Get all permuations of an array
     func getPermutations() ->[[Element]]{
         return permutations(self)
     }
