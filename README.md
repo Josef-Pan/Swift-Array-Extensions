@@ -1,6 +1,8 @@
 # MySwiftArrayExtensions
 Very usefaul Array Extensions which I used quite often
+
 Examples
+
 let arrayTest = [1, 2, 3, 8, 2, 1, 5, 1, 2, 3 ]
 
 print("arrayTest = \(arrayTest), arrayTest.firstNonRepeatingElement() = \(arrayTest.firstNonRepeatingElement())")
