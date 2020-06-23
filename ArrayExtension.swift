@@ -80,4 +80,20 @@ extension Array where Element: Comparable, Element: Hashable {
         let withHead = withoutHead.map { $0 + [head] }  // merging the head with the tail's powerset
         return withHead + withoutHead   // returning the tail's powerset and the just computed withHead array
     }
+     /// Get all permuations of an array
+    func getPermutations() ->[[Element]]{
+        return permutations(self)
+    }
+    private func permutations( _ xs: [Element]) -> [[Element]] {
+        guard let (head, tail) = xs.decompose() else { return [[]] }
+        return permutations(tail).flatMap { between(head, $0) }
+    }
+    private func decompose() -> (Iterator.Element, [Iterator.Element])? {
+        guard let x = first else { return nil }
+        return (x, Array(self[1..<count]))
+    }
+    private func between (_ x: Element, _ ys: [Element]) ->[[ Element ]] {
+        guard let (head, tail) = ys.decompose() else { return [[x]] }
+        return [[x] + ys] + between( x, tail).map { [head] + $0 }
+    }
 }
