@@ -71,4 +71,13 @@ extension Array where Element: Comparable, Element: Hashable {
         }
         return true
     }
+    /// Get all combinations from Array
+    func getAllCombinations() ->[[Element]] {
+        guard count > 0 else { return [[]] }
+        let tail = Array(self[1..<endIndex])    // tail contains the elements excluding the first element
+        let head = self[0]                      // head contains only the first element
+        let withoutHead = tail.getAllCombinations() // computing the tail's powerset
+        let withHead = withoutHead.map { $0 + [head] }  // merging the head with the tail's powerset
+        return withHead + withoutHead   // returning the tail's powerset and the just computed withHead array
+    }
 }
