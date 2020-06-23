@@ -1,14 +1,15 @@
 import UIKit
 extension Array where Element: Comparable, Element: Hashable {
-    func countUniques() -> Int {        // Count unique elements
-//        let sorted = self.sorted()
-//        let initial: (Element?, Int) = (nil, 0)
-//        let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
-//        return reduced.1
-         return self.removeAllDuplicates().count
+    /// Count unique elements of Array
+    func countUniques() -> Int {
+        //        let sorted = self.sorted()
+        //        let initial: (Element?, Int) = (nil, 0)
+        //        let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
+        //        return reduced.1
+        return self.removeAllDuplicates().count
     }
-    
-    func removedAdjacentDuplicates() -> [Element] {         // Remove only adjacent duplicates, keep the first
+     /// Remove only adjacent duplicates from Array, keep the first occurence
+    func removeAdjacentDuplicates() -> [Element] {
         var previousElement: Element? = nil
         return reduce(into: []) { total, element in
             defer {
@@ -20,34 +21,34 @@ extension Array where Element: Comparable, Element: Hashable {
             total.append(element)
         }
     }
-    func removeAllDuplicates()-> [Element] {               // Remove all duplicate elements, keeping only the first
+    /// Remove all duplicate elements from Array, keeping only the first occurence
+    func removeAllDuplicates()-> [Element] {
         return reduce(into: []) { total, element in
             total.contains(element) ? (): total.append(element)
         }
     }
-    func removeAllDuplicatingElements()-> [Element] {      // Remove all elements that are duplicating, no keeping
-        //let mappedItems = self.map { ($0, 1) }
-        //let counts = Dictionary(mappedItems, uniquingKeysWith: +)       //Turn into dictionary with element and counts
+    /// Remove all elements that are duplicating from Array, no keeping
+    func removeAllDuplicatingElements()-> [Element] {
         let counts = reduce(into: [:]){ total, element in
-           total[element, default:0 ] += 1
+            total[element, default:0 ] += 1
         } // let counts = reduce(into: [:]) { $0[$1, default: 0] += 1 } // Not readable
         return filter{ element in
             guard let count = counts[element] else { return false}
             return count>1 ? false : true               // Element with occurences more than 1 are duplicating
         }
     }
+    /// Test if Array has duplicates
     func hasDuplicates() ->Bool {
         let counts = reduce(into: [:]){ total, element in
-           total[element, default:0 ] += 1
+            total[element, default:0 ] += 1
         }
         guard let dups =  counts.values.max() else { return false }     //Get the maximum counts of elements
         return dups > 1 ? true : false                                  //Duplicates should have count more than 1
     }
-    func firstNonRepeatingElement() -> Element? {                       // First non repeating element or nil
-        //let mappedItems = self.map { ($0, 1) }
-        //let counts = Dictionary(mappedItems, uniquingKeysWith: +)     //Turn into dictionary with element and counts
+    /// Get first non repeating element from Array, may be nil
+    func firstNonRepeatingElement() -> Element? {
         let counts = reduce(into: [:]){ total, element in
-           total[element, default:0 ] += 1
+            total[element, default:0 ] += 1
         }
         for element in self {
             guard let count = counts[element] else { continue }
@@ -57,9 +58,11 @@ extension Array where Element: Comparable, Element: Hashable {
         }
         return nil
     }
-    func isAllGrouped() ->Bool { // All same values are adjacent or not, [ 1, 1, 2, 2 ] ->true, [ 2, 1, 1, 2 ] -> false
-        let mappedItems = removedAdjacentDuplicates().map { ($0, 1) }   // Ajacent duplicates removed, [ 2, 1, 2]
-        let counts = Dictionary(mappedItems, uniquingKeysWith: +)       //Turn into dictionary with element and counts
+    /// Test if same values in Array are adjacent or not, [ 1, 1, 2, 2 ] ->true, [ 1, 1, 2, 2, 3 ] ->true, [ 2, 1, 1, 2 ] -> false
+    func isAllGrouped() ->Bool {
+        let counts = removeAdjacentDuplicates().reduce(into: [:]){ total, element in
+            total[element, default:0 ] += 1
+        }
         for element in self {  // Now all elements should have count one, otherwise false
             guard let count = counts[element] else { continue }
             if count > 1 {
