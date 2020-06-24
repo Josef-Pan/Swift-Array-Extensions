@@ -93,3 +93,8 @@ extension Array where Element: Comparable, Element: Hashable {
         return [[x] + ys] + between( x, tail).map { [head] + $0 }
     }
 }
+extension Array  {  // Add this for Array to support contains operation on (Any,Any) tuple where Any is Euqatable
+    func contains<E1, E2>(_ tuple: (E1, E2)) -> Bool where E1: Equatable, E2: Equatable, Element == (E1, E2) {
+        return contains { $0.0 == tuple.0 && $0.1 == tuple.1 }
+    }
+}
