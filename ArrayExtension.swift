@@ -10,11 +10,8 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     /// Remove only adjacent duplicates from Array, keeping the first occurence
     func removeAdjacentDuplicates() -> [Element] {
-        var previousElement: Element? = nil
         return reduce(into: []) { total, element in
-            defer { previousElement = element }
-            guard previousElement != element else { return }
-            total.append(element)
+            total.last != element ? total.append(element) :()
         }
     }
     /// Remove all duplicate elements from Array, keeping only the first occurence
@@ -77,23 +74,29 @@ extension Array where Element: Comparable, Element: Hashable {
         return withHead + withoutHead   // returning the tail's powerset and the just computed withHead array
     }
     /// Get all permuations of an array
-    func getPermutations() ->[[Element]]{
-        return permutations(self)
+    func getPermutations() ->[[Element]]  {
+        guard self.count > 1 else { return [self] }
+        var permuations:[[Element]] = []
+        for tuple in self.enumerated() {
+            let otherElemets = self.enumerated().filter{ $0.offset != tuple.offset}.map{$0.element}
+            let permutationOthers = otherElemets.getPermutations()   // Get permuation of other elements
+            for permutation in permutationOthers {
+                permuations.append( [tuple.element] + permutation )
+            }
+        }
+        return permuations
     }
-    private func permutations( _ xs: [Element]) -> [[Element]] {
-        guard let (head, tail) = xs.decompose() else { return [[]] }
-        return permutations(tail).flatMap { between(head, $0) }
-    }
-    private func decompose() -> (Iterator.Element, [Iterator.Element])? {
-        guard let x = first else { return nil }
-        return (x, Array(self[1..<count]))
-    }
-    private func between (_ x: Element, _ ys: [Element]) ->[[ Element ]] {
-        guard let (head, tail) = ys.decompose() else { return [[x]] }
-        return [[x] + ys] + between( x, tail).map { [head] + $0 }
+    /// Test if contains subarray
+    func containsSubarray(subArray:[Element])->Bool{
+        guard subArray.count <= self.count else { return false }
+        for i in 0...self.count-subArray.count{
+            let slice = Array(self[i..<i+subArray.count])
+            if slice == subArray { return true }
+        }
+        return false
     }
 }
-extension Array  {  // Add this for Array to support contains operation on (Any,Any) tuple where Any is Euqatable
+extension Array  {  // let array contains to deal with tuple
     func contains<E1, E2>(_ tuple: (E1, E2)) -> Bool where E1: Equatable, E2: Equatable, Element == (E1, E2) {
         return contains { $0.0 == tuple.0 && $0.1 == tuple.1 }
     }
