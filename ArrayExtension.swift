@@ -24,7 +24,7 @@ extension Array where Element: Comparable, Element: Hashable {
     func removeAllDuplicatingElements()-> [Element] {
         let counts = reduce(into: [:]){ total, element in
             total[element, default:0 ] += 1
-        } // let counts = reduce(into: [:]) { $0[$1, default: 0] += 1 } // Not readable
+        } // let counts = reduce(into: [:]) { $0[$1, default: 0] += 1 } // Not readable, not encouraged
         return filter{ element in
             guard let count = counts[element] else { return false}
             return count>1 ? false : true    // Element with occurrences more than 1 are duplicating
@@ -45,9 +45,7 @@ extension Array where Element: Comparable, Element: Hashable {
         }
         for element in self {
             guard let count = counts[element] else { continue }
-            if count == 1 {
-                return element
-            }
+            if count == 1 { return element }
         }
         return nil
     }
@@ -58,9 +56,7 @@ extension Array where Element: Comparable, Element: Hashable {
         }
         for element in self {  // Now all elements should have count one, otherwise false
             guard let count = counts[element] else { continue }
-            if count > 1 {
-                return false
-            }
+            if count > 1 { return false }
         }
         return true
     }
@@ -75,9 +71,9 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     /// Get all permuations of an array
     func getPermutations() ->[[Element]]  {
-        guard self.count > 1 else { return [self] }
+        guard self.count > 1 else { return [self] } // Permutation of single element array is the array itself
         var permuations:[[Element]] = []
-        for tuple in self.enumerated() {
+        for tuple in self.enumerated() { // element itself + permutation of other elements make up all permutations
             let otherElemets = self.enumerated().filter{ $0.offset != tuple.offset}.map{$0.element}
             let permutationOthers = otherElemets.getPermutations()   // Get permuation of other elements
             for permutation in permutationOthers {
