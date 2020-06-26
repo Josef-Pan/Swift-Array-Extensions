@@ -2,18 +2,20 @@ import UIKit
 extension Array where Element: Comparable, Element: Hashable {
     /// Count unique elements of Array
     func countUniques() -> Int {
-        return self.removeAllDuplicates().count
+        return reduce(into: []) { total, element in
+            total.contains(element) ? () : total.append(element) // Append if not in 'total'
+        }.count
     }
     /// Remove only adjacent duplicates from Array, keeping the first occurence
     func removeAdjacentDuplicates() -> [Element] {
         return reduce(into: []) { total, element in
-            total.last != element ? total.append(element) :()
+            total.last != element ? total.append(element) : () // Append if element not equal to last one
         }
     }
     /// Remove all duplicate elements from Array, keeping only the first occurence
     func removeAllDuplicates()-> [Element] {
         return reduce(into: []) { total, element in
-            total.contains(element) ? (): total.append(element)
+            total.contains(element) ? (): total.append(element) // Append if not in 'total'
         }
     }
     /// Remove all elements that are duplicating from Array, not keeping of any occurrences of repeating elements
@@ -31,8 +33,8 @@ extension Array where Element: Comparable, Element: Hashable {
         let counts = reduce(into: [:]){ total, element in
             total[element, default:0 ] += 1
         }
-        guard let dups =  counts.values.max() else { return false }     //Get the maximum counts of elements
-        return dups > 1 ? true : false                                  //Duplicates should have count more than 1
+        let dups =  counts.values.max() ?? 0    //Get the maximum counts of elements
+        return dups > 1 ? true : false          //Duplicates should have count more than 1
     }
     /// Get first non repeating element from Array, may be nil
     func firstNonRepeatingElement() -> Element? {
@@ -88,7 +90,7 @@ extension Array where Element: Comparable, Element: Hashable {
         return false
     }
 }
-extension Array  {  // let array contains to deal with tuple
+extension Array  {  // let array contains() method to deal with tuple
     func contains<E1, E2>(_ tuple: (E1, E2)) -> Bool where E1: Equatable, E2: Equatable, Element == (E1, E2) {
         return contains { $0.0 == tuple.0 && $0.1 == tuple.1 }
     }
