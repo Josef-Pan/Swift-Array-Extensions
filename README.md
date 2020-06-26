@@ -3,17 +3,19 @@ Very usefaul Array Extensions which I used quite often
 
 Examples
 
-let arrayTest = [1, 2, 3, 8, 2, 1, 5, 1, 2, 3 ]
+let array = [2, 2, 3, 8, 2, 1, 1, 1, 2, 2, 3, 7 ]
 
-print("arrayTest = \(arrayTest), arrayTest.firstNonRepeatingElement() = \(arrayTest.firstNonRepeatingElement())")
+print("array = \(array), firstNonRepeatingElement() = \(array.firstNonRepeatingElement())")
 
-print("arrayTest = \(arrayTest), removeAllDuplicates() = \(arrayTest.removeAllDuplicates())")
+print("array = \(array), removeAdjacentDuplicates() = \(array.removeAdjacentDuplicates())")
 
-print("arrayTest = \(arrayTest), countUniques() = \(arrayTest.removeAllDuplicates().count)")
+print("array = \(array), removeAllDuplicates() = \(array.removeAllDuplicates())")
 
-print("arrayTest = \(arrayTest), removeAllDuplicatingElements() = \(arrayTest.removeAllDuplicatingElements())")
+print("array = \(array), countUniques() = \(array.removeAllDuplicates().count)")
 
-print("arrayTest = \(arrayTest), hasDuplicates() =\(arrayTest.hasDuplicates())")
+print("array = \(array), removeAllDuplicatingElements() = \(array.removeAllDuplicatingElements())")
+
+print("array = \(array), hasDuplicates() = \(array.hasDuplicates())")
 
 print("[ 1, 1, 2, 2, 3].isAllGrouped() = \([ 1, 1, 2, 2, 3].isAllGrouped())")
 
@@ -23,8 +25,15 @@ let combinationsOf2 = [1, 2, 3, 4].getAllCombinations().filter { $0.count == 2 }
 
 let combinationsOf3 = [1, 2, 3, 4].getAllCombinations().filter { $0.count == 3 }
 
-print("combinations of 2 elements = \(combinationsOf2)")
+print("[1, 2, 3, 4] combinations of 2 elements = \(combinationsOf2)")
 
-print("combinations of 3 elements = \(combinationsOf3)")
+print("[1, 2, 3, 4] combinations of 3 elements = \(combinationsOf3)")
 
 print("[ 3, 2, 1 ].getPermutations()   = \([ 3, 2, 1 ].getPermutations())")
+
+let expenses = [21.37, 9.32, 55.21,388.77, 11.42,  9.32, 10.18, 11.41,  9.32]
+
+let subArray = [ 11.41,  9.32]
+
+print(expenses.containsSubarray(subArray: subArray ))
+
