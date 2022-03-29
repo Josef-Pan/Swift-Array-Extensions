@@ -42,11 +42,13 @@ extension Array where Element: Comparable, Element: Hashable {
         let counts = reduce(into: [:]){ result, element in
             result[element, default:0 ] += 1
         }
-        for element in self {
-            guard let count = counts[element] else { continue }
-            if count == 1 { return element }
-        }
-        return nil
+//         for element in self {
+//             guard let count = counts[element] else { continue }
+//             if count == 1 { return element }
+//         }
+//      return nil
+        let uique_index = self.firstIndex(where: {counts[$0] == 1})
+        return uique_index == nil ? nil : self[uique_index!]
     }
     /// Test if same values in Array are adjacent or not, [ 1, 1, 2, 2 ] ->true, [ 1, 1, 2, 2, 3 ] ->true, [ 2, 1, 1, 2 ] -> false
     func isAllGrouped() ->Bool {
