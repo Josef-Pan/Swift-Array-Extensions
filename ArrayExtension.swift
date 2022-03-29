@@ -1,4 +1,5 @@
 import UIKit
+
 extension Array where Element: Comparable, Element: Hashable {
     /// Count unique elements of Array
     func countUniques() -> Int {
