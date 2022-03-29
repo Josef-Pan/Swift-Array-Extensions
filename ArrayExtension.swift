@@ -3,26 +3,26 @@ import UIKit
 extension Array where Element: Comparable, Element: Hashable {
     /// Count unique elements of Array
     func countUniques() -> Int {
-        return reduce(into: []) { total, element in
-            total.contains(element) ? () : total.append(element) // Append if not in 'total'
+        return reduce(into: []) { result, element in
+            result.contains(element) ? () : result.append(element) // Append if not in 'result'
         }.count
     }
     /// Remove only adjacent duplicates from Array, keeping the first occurence
     func removeAdjacentDuplicates() -> [Element] {
-        return reduce(into: []) { total, element in
-            total.last != element ? total.append(element) : () // Append if element not equal to last one
+        return reduce(into: []) { result, element in
+            result.last != element ? result.append(element) : () // Append if element not equal to last one
         }
     }
     /// Remove all duplicate elements from Array, keeping only the first occurence
     func removeAllDuplicates()-> [Element] {
-        return reduce(into: []) { total, element in
-            total.contains(element) ? (): total.append(element) // Append if not in 'total'
+        return reduce(into: []) { result, element in
+            result.contains(element) ? (): result.append(element) // Append if not in 'result'
         }
     }
     /// Remove all elements that are duplicating from Array, not keeping of any occurrences of repeating elements
     func removeAllDuplicatingElements()-> [Element] {
-        let counts = reduce(into: [:]){ total, element in
-            total[element, default:0 ] += 1
+        let counts = reduce(into: [:]){ result, element in
+            result[element, default:0 ] += 1
         } // let counts = reduce(into: [:]) { $0[$1, default: 0] += 1 } // Not readable, not encouraged
         return filter{ element in
             guard let count = counts[element] else { return false}
@@ -31,16 +31,16 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     /// Test if Array has duplicates
     func hasDuplicates() ->Bool {
-        let counts = reduce(into: [:]){ total, element in
-            total[element, default:0 ] += 1
+        let counts = reduce(into: [:]){ result, element in
+            result[element, default:0 ] += 1
         }
         let dups =  counts.values.max() ?? 0    //Get the maximum counts of elements
         return dups > 1 ? true : false          //Duplicates should have count more than 1
     }
     /// Get first non repeating element from Array, may be nil
     func firstNonRepeatingElement() -> Element? {
-        let counts = reduce(into: [:]){ total, element in
-            total[element, default:0 ] += 1
+        let counts = reduce(into: [:]){ result, element in
+            result[element, default:0 ] += 1
         }
         for element in self {
             guard let count = counts[element] else { continue }
@@ -50,8 +50,8 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     /// Test if same values in Array are adjacent or not, [ 1, 1, 2, 2 ] ->true, [ 1, 1, 2, 2, 3 ] ->true, [ 2, 1, 1, 2 ] -> false
     func isAllGrouped() ->Bool {
-        let counts = removeAdjacentDuplicates().reduce(into: [:]){ total, element in
-            total[element, default:0 ] += 1
+        let counts = removeAdjacentDuplicates().reduce(into: [:]){ result, element in
+            result[element, default:0 ] += 1
         }
         for element in self {  // Now all elements should have count one, otherwise false
             guard let count = counts[element] else { continue }
@@ -62,8 +62,8 @@ extension Array where Element: Comparable, Element: Hashable {
     /// Get all combinations from Array, apply filter { $0.count ==n } to get combos of n elements
     func getAllCombinations() ->[[Element]] {
         guard count > 0 else { return [[]] }
-        let tail = Array(self[1..<endIndex])    // tail contains the elements excluding the first element
         let head = self[0]                      // head contains only the first element
+        let tail = Array(self[1..<endIndex])    // tail contains the elements excluding the first element
         let withoutHead = tail.getAllCombinations() // computing the tail's powerset
         let withHead = withoutHead.map { $0 + [head] }  // merging the head with the tail's powerset
         return withHead + withoutHead   // returning the tail's powerset and the just computed withHead array
