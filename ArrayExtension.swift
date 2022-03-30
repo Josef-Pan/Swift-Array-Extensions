@@ -7,7 +7,7 @@ extension Array where Element: Comparable, Element: Hashable {
             result.contains(element) ? () : result.append(element) // Append if not in 'result'
         }.count
     }
-    /// Remove only adjacent duplicates from Array, keeping the first occurence
+    /// Remove only adjacent duplicates from Array, keeping the first occurence of duplicated elements
     func removeAdjacentDuplicates() -> [Element] {
         return reduce(into: []) { result, element in
             result.last != element ? result.append(element) : () // Append if element not equal to last one
