@@ -42,11 +42,6 @@ extension Array where Element: Comparable, Element: Hashable {
         let counts = reduce(into: [:]){ result, element in
             result[element, default:0 ] += 1
         }
-//         for element in self {
-//             guard let count = counts[element] else { continue }
-//             if count == 1 { return element }
-//         }
-//      return nil
         let uique_index = self.firstIndex(where: {counts[$0] == 1})
         return uique_index == nil ? nil : self[uique_index!]
     }
@@ -62,6 +57,8 @@ extension Array where Element: Comparable, Element: Hashable {
         return true
     }
     /// Get all combinations from Array, apply filter { $0.count ==n } to get combos of n elements
+    /// This function does not remove duplicates by default
+    /// Use removeAllDuplicates().getAllCombinations() to have cominations for uique elements
     func getAllCombinations() ->[[Element]] {
         guard count > 0 else { return [[]] }
         let head = self[0]                      // head contains only the first element
@@ -71,7 +68,9 @@ extension Array where Element: Comparable, Element: Hashable {
         return withHead + withoutHead   // returning the tail's powerset and the just computed withHead array
     }
     /// Get all permuations of an array
-    func getPermutations() ->[[Element]]  {
+    /// This function does not remove duplicates by default
+    /// Use removeAllDuplicates().getPermutations() to have cominations for uique elements
+        func getPermutations() ->[[Element]]  {
         guard self.count > 1 else { return [self] } // Permutation of single element array is the array itself
         var permuations:[[Element]] = []
         for tuple in self.enumerated() { // element itself + permutation of other elements make up all permutations
