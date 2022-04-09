@@ -91,6 +91,24 @@ extension Array where Element: Comparable, Element: Hashable {
         }
         return false
     }
+    /// Use 1D array with * to generate a 2D array
+    /// [1, 3, 5] * 2 =[ [1, 3, 5], [1, 3, 5]]
+    /// Not fully optimized, may have better solutions
+    static func * (lhs: [Element], rhs: Int) ->[[Element]] {
+        guard rhs > 0 else { return [] }
+        var final:[[Element]] = []
+        (0..<rhs).forEach{ $0; final.append(lhs) } // $0 has no operation, this is a must
+        return final
+    }
+    /// Use 2D array with * to generate a 3D array
+    /// [ [1, 3, 5], [1, 3, 5] ] * 2 =[ [ [1, 3, 5], [1, 3, 5] ], [ [1, 3, 5], [1, 3, 5] ] ]
+    /// Not fully optimized, may have better solutions
+    static func * (lhs: [[Element]], rhs: Int) ->[[[Element]]] {
+        guard rhs > 0 else { return [] }
+        var final:[[[Element]]] = []
+        (0..<rhs).forEach{ $0; final.append(lhs) } // $0 has no operation, this is a must
+        return final
+    }
 }
 extension Array  {  // let array contains() method to deal with tuple
     func contains<E1, E2>(_ tuple: (E1, E2)) -> Bool where E1: Equatable, E2: Equatable, Element == (E1, E2) {
