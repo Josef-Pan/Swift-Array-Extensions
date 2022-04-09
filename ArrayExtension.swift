@@ -97,7 +97,7 @@ extension Array where Element: Comparable, Element: Hashable {
     static func * (lhs: [Element], rhs: Int) ->[[Element]] {
         guard rhs > 0 else { return [] }
         var final:[[Element]] = []
-        (0..<rhs).forEach{ $0; final.append(lhs) } // $0 has no operation, this is a must
+        (0..<rhs).forEach{ $0; final.append(lhs) } // $0 has no operation, just required by forEach
         return final
     }
     /// Use 2D array with * to generate a 3D array
@@ -106,7 +106,7 @@ extension Array where Element: Comparable, Element: Hashable {
     static func * (lhs: [[Element]], rhs: Int) ->[[[Element]]] {
         guard rhs > 0 else { return [] }
         var final:[[[Element]]] = []
-        (0..<rhs).forEach{ $0; final.append(lhs) } // $0 has no operation, this is a must
+        (0..<rhs).forEach{ $0; final.append(lhs) } // $0 has no operation, just required by forEach
         return final
     }
 }
