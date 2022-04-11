@@ -102,7 +102,7 @@ extension Array where Element: Comparable, Element: Hashable {
     /// Get all combinations from Array, apply filter { $0.count ==n } to get combos of n elements
     /// ‼️This function does not remove duplicates by default
     /// Use removeAllDuplicates().getAllCombinations() to have combinations for uique elements
-    /// - Returns: all combinations of the original array, note that the empty array is also included
+    /// - Returns: all combinations of the original array, note that the empty array [] is also included
     func getCombinations() ->[[Element]] {
         guard count > 0 else { return [[]] }
         let head = self[0]                      // head contains only the first element
@@ -115,7 +115,7 @@ extension Array where Element: Comparable, Element: Hashable {
     /// Get all permuations of an array
     /// ‼️This function does not remove duplicates by default
     /// Use removeAllDuplicates().getPermutations() to have permutations for uique elements
-    /// - Returns: all permutations of the original array, note that the empty array [] is also included
+    /// - Returns: all permutations of the original array
     func getPermutations() ->[[Element]]  {
         guard self.count > 1 else { return [self] } // Permutation of single element array is the array itself
         var permuations:[[Element]] = []
