@@ -103,11 +103,11 @@ extension Array where Element: Comparable, Element: Hashable {
     /// ‼️This function does not remove duplicates by default
     /// Use removeAllDuplicates().getAllCombinations() to have cominations for uique elements
     /// - Returns: all combinations of the original array, note that the empty array is also included
-    func getAllCombinations() ->[[Element]] {
+    func getCombinations() ->[[Element]] {
         guard count > 0 else { return [[]] }
         let head = self[0]                      // head contains only the first element
         let tail = Array(self[1..<endIndex])    // tail contains the elements excluding the first element
-        let withoutHead = tail.getAllCombinations() // computing the tail's powerset
+        let withoutHead = tail.getCombinations() // computing the tail's powerset
         let withHead = withoutHead.map { $0 + [head] }  // merging the head with the tail's powerset
         return withHead + withoutHead   // returning the tail's powerset and the just computed withHead array
     }
