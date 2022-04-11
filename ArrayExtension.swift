@@ -50,7 +50,7 @@ extension Array where Element: Comparable, Element: Hashable {
     
     /// Remove all elements that are duplicating from Array, not keeping of any occurrences of repeating elements
     /// - Returns: array with all non-unique elements removed
-    func removeAllDuplicatingElements()-> [Element] {
+    func removeNonUniqueElements()-> [Element] {
         let counts = reduce(into: [:]){ result, element in
             result[element, default:0 ] += 1
         } // let counts = reduce(into: [:]) { $0[$1, default: 0] += 1 } // Not readable, not encouraged
@@ -59,7 +59,7 @@ extension Array where Element: Comparable, Element: Hashable {
     
     /// Remove all elements that are duplicating from Array, not keeping of any occurrences of repeating elements
     /// Unlike previous func, this function operates on the original Array
-    mutating func removeAllDuplicatingElementsInplace(){
+    mutating func removeNonUniqueElementsInplace(){
         let counts = reduce(into: [:]){ result, element in
             result[element, default:0 ] += 1
         }
