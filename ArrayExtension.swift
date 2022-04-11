@@ -3,6 +3,7 @@ import Foundation
 extension Array where Element: Comparable, Element: Hashable {
     
     /// Count unique elements of Array
+    /// [ 1, 3, 3, 1, 5, 7 ] -> 4
     /// - Returns: number of unique elements in array
     func countUniques() -> Int {
         return reduce(into: []) { result, element in
@@ -11,6 +12,7 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     
     /// Remove only adjacent duplicates from Array, keeping the first occurence of duplicated elements
+    /// [ 1, 3, 3, 1, 5, 7 ] -> [ 1, 3, 1, 5, 7 ]
     /// - Returns: array without adjacent duplicates
     func removeAdjacentDuplicates() -> [Element] {
         return reduce(into: []) { result, element in
@@ -19,7 +21,8 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     
     /// Remove only adjacent duplicates from Array, keeping the first occurence of duplicated elements
-    /// Unlike previous func, this function operates on the original Array
+    /// [ 1, 3, 3, 1, 5, 7 ] -> [ 1, 3, 1, 5, 7 ]
+    /// Unlike previous func, this function operates inplace
     mutating func removeAdjacentDuplicatesInplace(){
         var indicesToRemove :[Int] = []
         self.enumerated().forEach{ idx, value in
@@ -30,6 +33,7 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     
     /// Remove all duplicate elements from Array, keeping only the first occurence
+    /// [ 1, 3, 3, 1, 5, 7 ] -> [ 1, 3, 5, 7 ]
     /// - Returns: array without duplicates
     func removeAllDuplicates()-> [Element] {
         return reduce(into: []) { result, element in
@@ -38,7 +42,8 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     
     /// Remove all duplicate elements from Array, keeping only the first occurence
-    /// Unlike previous func, this function operates on the original Array
+    /// [ 1, 3, 3, 1, 5, 7 ] -> [ 1, 3, 5, 7 ]
+    /// Unlike previous func, this function operates inplace
     mutating func removeAllDuplicatesInplace(){
         var indicesToRemove :[Int] = []
         self.enumerated().forEach{ idx, value in
@@ -49,6 +54,7 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     
     /// Remove all elements that are duplicating from Array, not keeping of any occurrences of repeating elements
+    /// [ 1, 3, 3, 1, 5, 7 ] -> [ 5, 7 ]
     /// - Returns: array with all non-unique elements removed
     func removeNonUniqueElements()-> [Element] {
         let counts = reduce(into: [:]){ result, element in
@@ -58,7 +64,8 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     
     /// Remove all elements that are duplicating from Array, not keeping of any occurrences of repeating elements
-    /// Unlike previous func, this function operates on the original Array
+    /// [ 1, 3, 3, 1, 5, 7 ] -> [ 5, 7 ]
+    /// Unlike previous func, this function operates inplace
     mutating func removeNonUniqueElementsInplace(){
         let counts = reduce(into: [:]){ result, element in
             result[element, default:0 ] += 1
@@ -67,6 +74,7 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     
     /// Test if Array has duplicates
+    /// [ 1, 3, 3, 1, 5, 7 ] -> true
     /// - Returns: true if array has duplicates
     func hasDuplicates() ->Bool {
         let counts = reduce(into: [:]){ result, element in
@@ -77,6 +85,7 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     
     /// Get first non repeating element from Array, may be nil
+    /// [ 1, 3, 3, 1, 5, 7 ] -> Optional(5)
     /// - Returns: first non-repeating element, maybe nil
     func firstNonRepeatingElement() -> Element? {
         let counts = reduce(into: [:]){ result, element in
@@ -86,7 +95,8 @@ extension Array where Element: Comparable, Element: Hashable {
         return uique_index == nil ? nil : self[uique_index!]
     }
     
-    /// Test if same values in Array are adjacent or not, [ 1, 1, 2, 2 ] ->true, [ 1, 1, 2, 2, 3 ] ->true, [ 2, 1, 1, 2 ] -> false
+    /// Test if same values in Array are adjacent or not, 
+    /// [ 1, 1, 2, 2 ] ->true, [ 1, 1, 2, 2, 3 ] ->true, [ 2, 1, 1, 2 ] -> false
     /// - Returns: true if all grouped
     func isAllGrouped() ->Bool {
         let counts = removeAdjacentDuplicates().reduce(into: [:]){ result, element in
@@ -141,7 +151,7 @@ extension Array where Element: Comparable, Element: Hashable {
     }
     
     /// Use 1D array with * to generate a 2D array
-    /// [1, 3, 5] * 2 =[ [1, 3, 5], [1, 3, 5]]
+    /// [1, 3, 5] * 2 = [[1, 3, 5], [1, 3, 5]]
     /// Not fully optimized, may have better solutions
     /// - Returns: a 2D array with  rhs rows of the the original 1D array
     static func * (lhs: [Element], rhs: Int) ->[[Element]] {
