@@ -116,7 +116,7 @@ extension Array where Element: Comparable, Element: Hashable {
     /// ‼️This function does not remove duplicates by default
     /// Use removeAllDuplicates().getPermutations() to have cominations for uique elements
     /// - Returns: all permutations of the original array, note that the empty array [] is also included
-        func getPermutations() ->[[Element]]  {
+    func getPermutations() ->[[Element]]  {
         guard self.count > 1 else { return [self] } // Permutation of single element array is the array itself
         var permuations:[[Element]] = []
         for tuple in self.enumerated() { // element itself + permutation of other elements make up all permutations
