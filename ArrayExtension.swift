@@ -24,7 +24,7 @@ extension Array where Element: Comparable, Element: Hashable {
     /// [ 1, 3, 3, 1, 5, 7 ] -> [ 1, 3, 1, 5, 7 ]
     /// Unlike previous func, this function operates inplace
     mutating func removeAdjacentDuplicatesInplace(){
-        var indicesToRemove :[Int] = []
+        var indicesToRemove = ContiguousArray<Int>()
         self.enumerated().forEach{ idx, value in
             guard idx > 0 else { return } // Search from idx == 1
             value == self[idx-1] ? indicesToRemove.append(idx) : ()
@@ -45,7 +45,7 @@ extension Array where Element: Comparable, Element: Hashable {
     /// [ 1, 3, 3, 1, 5, 7 ] -> [ 1, 3, 5, 7 ]
     /// Unlike previous func, this function operates inplace
     mutating func removeAllDuplicatesInplace(){
-        var indicesToRemove :[Int] = []
+        var indicesToRemove = ContiguousArray<Int>()
         self.enumerated().forEach{ idx, value in
             guard idx > 0 else { return } // Search from idx == 1
             self[0..<(idx-1)].contains(value) ? indicesToRemove.append(idx) : ()
