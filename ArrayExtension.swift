@@ -6,7 +6,7 @@ extension Array where Element: Comparable, Element: Hashable {
     /// [ 1, 3, 3, 1, 5, 7 ] -> 4
     /// - Returns: number of unique elements in array
     func countUniques() -> Int {
-        return reduce(into: []) { result, element in
+        return self.reduce(into: []) { result, element in
             result.contains(element) ? () : result.append(element) // Append if not in 'result'
         }.count
     }
@@ -15,7 +15,7 @@ extension Array where Element: Comparable, Element: Hashable {
     /// [ 1, 3, 3, 1, 5, 7 ] -> [ 1, 3, 1, 5, 7 ]
     /// - Returns: array without adjacent duplicates
     func removeAdjacentDuplicates() -> [Element] {
-        return reduce(into: []) { result, element in
+        return self.reduce(into: []) { result, element in
             result.last != element ? result.append(element) : () // Append if element not equal to last one
         }
     }
@@ -36,7 +36,7 @@ extension Array where Element: Comparable, Element: Hashable {
     /// [ 1, 3, 3, 1, 5, 7 ] -> [ 1, 3, 5, 7 ]
     /// - Returns: array without duplicates
     func removeAllDuplicates()-> [Element] {
-        return reduce(into: []) { result, element in
+        return self.reduce(into: []) { result, element in
             result.contains(element) ? (): result.append(element) // Append if not in 'result'
         }
     }
@@ -60,7 +60,7 @@ extension Array where Element: Comparable, Element: Hashable {
         let counts = reduce(into: [:]){ result, element in
             result[element, default:0 ] += 1
         } // let counts = reduce(into: [:]) { $0[$1, default: 0] += 1 } // Not readable, not encouraged
-        return filter{counts[$0, default:0] > 1}
+        return self.filter{counts[$0, default:0] > 1}
     }
     
     /// Remove all elements that are duplicating from Array, not keeping of any occurrences of repeating elements
