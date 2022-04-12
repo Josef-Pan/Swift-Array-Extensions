@@ -130,7 +130,7 @@ extension Array where Element: Comparable, Element: Hashable {
         guard self.count > 1 else { return [self] } // Permutation of single element array is the array itself
         var permuations:[[Element]] = []
         for (idx,value) in self.enumerated() { // element itself + permutation of other elements make up all permutations
-            let otherElements = self.enumerated().filter{ $0.offset != idx}.map{$0.element}
+            let otherElements = self.enumerated().filter{$0.offset != idx}.map{$0.element}
             let permutationOthers = otherElements.getPermutations()   // Get permuation of other elements
             for permutation in permutationOthers {
                 permuations.append( [value] + permutation )
