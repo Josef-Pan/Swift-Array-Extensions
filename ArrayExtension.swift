@@ -114,7 +114,7 @@ extension Array where Element: Comparable, Element: Hashable {
     /// Use removeAllDuplicates().getAllCombinations() to have combinations for uique elements
     /// - Returns: all combinations of the original array, note that the empty array [] is also included
     func getCombinations() ->[[Element]] {
-        guard count > 0 else { return [[]] }
+        guard self.count > 0 else { return [[]] }
         let head = self[0]                      // head contains only the first element
         let tail = Array(self[1..<endIndex])    // tail contains the elements excluding the first element
         let withoutHead = tail.getCombinations() // computing the tail's powerset
