@@ -129,11 +129,11 @@ extension Array where Element: Comparable, Element: Hashable {
     func getPermutations() ->[[Element]]  {
         guard self.count > 1 else { return [self] } // Permutation of single element array is the array itself
         var permuations:[[Element]] = []
-        for tuple in self.enumerated() { // element itself + permutation of other elements make up all permutations
-            let otherElemets = self.enumerated().filter{ $0.offset != tuple.offset}.map{$0.element}
+        for (idx,value) in self.enumerated() { // element itself + permutation of other elements make up all permutations
+            let otherElemets = self.enumerated().filter{ $0.offset != idx}.map{$0.element}
             let permutationOthers = otherElemets.getPermutations()   // Get permuation of other elements
             for permutation in permutationOthers {
-                permuations.append( [tuple.element] + permutation )
+                permuations.append( [value] + permutation )
             }
         }
         return permuations
