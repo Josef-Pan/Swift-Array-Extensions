@@ -29,7 +29,7 @@ extension Array where Element: Comparable, Element: Hashable {
             guard idx > 0 else { return } // Search from idx == 1
             value == self[idx-1] ? indicesToRemove.append(idx) : ()
         }
-        indicesToRemove.enumerated().forEach{ self.remove(at: $1 - $0 )} // value - index
+        indicesToRemove.reversed().forEach{self.remove(at: $0)} // remove elements from larger indices
     }
     
     /// Remove all duplicate elements from Array, keeping only the first occurence
@@ -50,7 +50,7 @@ extension Array where Element: Comparable, Element: Hashable {
             guard idx > 0 else { return } // Search from idx == 1
             self[0..<(idx-1)].contains(value) ? indicesToRemove.append(idx) : ()
         }
-        indicesToRemove.enumerated().forEach{ self.remove(at: $1 - $0 )} // value - index
+        indicesToRemove.reversed().forEach{self.remove(at: $0)} // remove elements from larger indices
     }
     
     /// Remove all elements that are duplicating from Array, not keeping of any occurrences of repeating elements
