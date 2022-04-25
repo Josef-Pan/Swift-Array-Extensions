@@ -94,6 +94,13 @@ extension Array where Element: Comparable, Element: Hashable {
         let uique_index = self.firstIndex(where: {counts[$0] == 1})
         return uique_index == nil ? nil : self[uique_index!]
     }
+   
+    /// Remove multiple indices from a Set
+    mutating func remove(at ixs:Set<Int>) -> () {
+        for i in Array<Int>(ixs).sorted(by:>) {
+            self.remove(at:i)
+        }
+    }
     
     /// Test if same values in Array are adjacent or not, 
     /// [ 1, 1, 2, 2 ] ->true, [ 1, 1, 2, 2, 3 ] ->true, [ 2, 1, 1, 2 ] -> false
